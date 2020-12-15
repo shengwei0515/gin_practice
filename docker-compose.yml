@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    image: postgres:11
+    container_name: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - /Users/syushengwei/Seals/gin_practice/data/postgres:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    restart: always
