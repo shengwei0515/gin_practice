@@ -1,5 +1,10 @@
 package models
 
+import (
+	"fmt"
+	orm "seal/service/postgres"
+)
+
 type User struct {
 	ID       int64  `json: "id"`
 	Username string `json: "username"`
@@ -7,9 +12,12 @@ type User struct {
 }
 
 func (user *User) Users() (users []User, err error) {
-	// TODO: add db query and return users
+	fmt.Print("Before query")
 
-	userFound := []User{}
+	result := orm.Db.Find(&users)
 
-	return userFound, nil
+	if err := result.Error; err != nil {
+		return nil, err
+	}
+	return users, err
 }

@@ -1,4 +1,4 @@
-package services
+package postgres
 
 import (
 	"fmt"
@@ -9,6 +9,7 @@ import (
 )
 
 var Db *gorm.DB
+var DbErr error
 
 func init() {
 
@@ -31,11 +32,12 @@ func init() {
 	fmt.Println(dbURI)
 
 	// connect to db
-	Db, err := gorm.Open(dbType, dbURI)
-	if err != nil {
+	Db, DbErr = gorm.Open(dbType, dbURI)
+	if DbErr != nil {
 		fmt.Print(err)
 	}
 	if Db.Error != nil {
 		fmt.Print(Db.Error)
 	}
+	fmt.Println(Db.DB().Stats())
 }
