@@ -1,13 +1,11 @@
 package main
 
 import (
-	"seal/router"
-	orm "seal/service/postgres"
+	"seal/routers"
 )
 
 func main() {
-	defer orm.Db.Close()
-	r := router.InitRouter()
 
-	r.Run(":8080")
+	router := routers.InitRouters()
+	router.Run(":8080")
 }
