@@ -27,7 +27,7 @@ func main() {
 	router.Use(gin.Recovery())
 	routerGroup := router.Group("api")
 	routerGroup.Use()
-	routers.AddRoutesAccounts(routerGroup, accountController)
+	routers.AddRoutesAccount(routerGroup, accountController)
 
 	router.Run(":8080")
 }
