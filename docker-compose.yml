@@ -8,9 +8,12 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - /Users/syushengwei/Seals/gin_practice/data/postgres:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data/
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: postgres
     restart: always
+
+volumes:
+  postgres_data:

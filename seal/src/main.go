@@ -17,7 +17,6 @@ func main() {
 	accountService := &services.AccountService{
 		DBClient: postgresDB,
 	}
-
 	// new controllers
 	accountController := &controllers.AccountController{
 		AccountService: accountService,
