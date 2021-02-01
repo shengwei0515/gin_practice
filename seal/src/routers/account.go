@@ -10,4 +10,5 @@ import (
 func AddRoutesAccount(r *gin.RouterGroup, controller *controllers.AccountController) {
 	r.GET("/accounts", controller.GetAccounts)
 	r.POST("/account", controller.CreateAccount)
+	r.PUT("/account", controller.UpdateAccount)
 }

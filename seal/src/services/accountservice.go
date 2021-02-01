@@ -5,13 +5,12 @@ import (
 	"seal/models"
 
 	"github.com/jinzhu/gorm"
-	"github.com/gin-gonic/gin"
 )
 
 // IAccountService interface
 type IAccountService interface {
 	GetAccounts() models.Accounts
-	CreateAccount(context *gin.Context) (int64, error)
+	CreateAccount(account *models.Account) (int64, error)
 }
 
 // AccountService struct
@@ -32,12 +31,23 @@ func (accountSvc *AccountService) GetAccounts() models.Accounts {
 	return accounts
 }
 
-func (accountSvc *AccountService) CreateAccount(context *gin.Context) (int64, error){
-	var account models.Account
-	context.BindJSON(&account)
-	if _ValidateAccountColumn(&account) {
+func (accountSvc *AccountService) CreateAccount(account *models.Account) (int64, error){
+	if _ValidateAccountColumn(account) {
 		result := accountSvc.DBClient.Table("Accounts").Create(&account)
 		if result.Error == nil {
+			return result.RowsAffected, nil
+		} else {
+			return 0, result.Error
+		}
+	} else{
+		return 0, errors.New("username and password can not be nil")
+	}
+}
+
+func (accountSvc *AccountService) UpdateAccount(account *models.Account) (int64, error){
+	if _ValidateAccountColumn(account) {
+		result := accountSvc.DBClient.Table("Accounts").Where("username = ?",account.Username).Update("password", account.Password)
+		if result.Error == nil && result.RowsAffected != 0{
 			return result.RowsAffected, nil
 		} else {
 			return 0, result.Error
